@@ -17,17 +17,33 @@ Disconnect     :
 <F4>
 ###########################################################################]]
 
+" fold markers are double square brakets
+
+[[
+
+fold test 
+
+]]
+
+
+
+
 <F7>
 ssh -S /tmp/blue -O forward -L 9001:192.168.1.1:22
 
 <F8>
 ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -MS /tmp/t1 -p 9001 username@localhost
 
+"this is a quote"
+
+!! this is a warning
+!! warning! warning!
+
+this is regular text
+
+// this is a comment
 " this is a comment
 # this is a comment
-// this is a comment
-
-!! warning! warning!
 
 
 " the ipv6 highlight is kinda wonky
@@ -36,10 +52,46 @@ FF:FF:FF:FF:FF:FF
 fe80::1
 fe80:1234:5678::1
 
+0010.12.15.0000 " simulate version number
+1.01.56.99 
+192.168.0.99
+255.255.255.255
+1.1.1.1.1.1.1 
+300.300.300.300 " should not be highlighted. 
+
+0:0:0:0:0:0 " simulate weird version number. should not be highlighted
+00:00:00:00:00:00
+11:11:11:11:11:11
+ff:ff:ff:ff:ff:ff
+AF:B6:90:CC:DE:AD
+gg:gg:gg:gg:gg:gg " should not be highlighted
+
+
+" kinda wonky but still works
+inet6 fe80::5e87:9cff:fec0:6728/64
+
+::1
+
+fe80::1  
+
+
 <F5>
 2022-07-08-11:01:53 - connect t1
+2021-05-06-14:49:19
+2021-05-07-19:33:57
 
 " Ctrl-\ to duplicate lines (close enough to Ctrl-Enter to still have a good keyboard feel)
 
 duplicate this line!
 duplicate this line too!
+
+
+
+
+
+
+
+
+
+
+
