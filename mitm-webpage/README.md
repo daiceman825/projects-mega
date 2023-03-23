@@ -1,3 +1,8 @@
+!!! NOTE !!!
+login.php and style.css : place on server
+login-new.php , login-old.php , style-new.css : place on kali
+
+
 
 // TODO : add background info, description of use case, graphics, and all other relevant info
 
