@@ -1,7 +1,6 @@
 syntax enable  
 set nocompatible 
 
-" Source the vimrc everytime you open a new file
 autocmd BufRead,BufNewFile,BufEnter * source ~/.vimrc
 
 " COLORS AND HIGHLIGHTS
@@ -17,12 +16,12 @@ set autoindent          " allow auto indention
 set tabstop=4           " set tab to be 4 visual spaces
 set softtabstop=4       " set tab to be 4 spaces in editing mode
 set expandtab           " change all tabs to spaces
-set shiftwidth=4        " when shifting with Shift+>> or Shift+<< move 4 spaces 
+set shiftwidth=4        " change shift+>> and shift+<< to 4 spaces
 
 " LINES
 set number              " show line numbers
 set cursorline          " highlight current line
-set mouse+=a            " do not select line numbers with mouse when copying
+set mouse+=a            " do not select line numbers when copying
 
 " VISUAL EASE
 set wildmenu            " allow command autocompletion in menu
@@ -34,7 +33,7 @@ set ignorecase          " ignore case when searching
 set incsearch           " search as characters are entered
 set hlsearch            " highlight search matches
 
-" turn off search highlight with backslash (\) + Space
+" turn off search highlight by pressing space
 nnoremap <leader><space> :nohlsearch<CR>    
 
 " FOLDING
@@ -44,49 +43,32 @@ set foldnestmax=5       " maximum of 5 nested folds ; increase as needed
 set foldmethod=marker   " set folding to marker. could also be tab
 set foldmarker=[[,]]    " set fold markers to double brackets [[ <data> ]]
 
-" open/close folds with SPACE in normal mode
+" open/close folds with SPACE 
 nnoremap <space> za     
 
 " COPY + PASTE
-" copy using Ctrl + Y in Visual Mode  ( vim-gtk with +clipboard required! )
-vnoremap <C-y> "+yy
+" copy using Ctrl + C in Visual Mode  ( vim-gtk with +clipboard required! )
+"vnoremap <C-c> "+yy
 
 " Shift lines up and down with Ctrl-Up and Ctrl-Down
-nnoremap <C-down> :m .+1<CR>==
-nnoremap <C-up> :m .-2<CR>==
+nnoremap <C-down>      :m .+1<CR>==
+nnoremap <C-up>        :m .-2<CR>==
 inoremap <C-down> <Esc>:m .+1<CR>==gi
-inoremap <C-up> <Esc>:m .-2<CR>==gi
+inoremap <C-up>   <Esc>:m .-2<CR>==gi
 
 " Duplicate Current Line with Ctrl-\ (Backslash)
-nnoremap <C-\> yyp
-inoremap <C-\> <ESC>yypi " YIPPEE!!
+nnoremap <C-\>      yyp
+inoremap <C-\> <ESC>yypi
 
+syntax region excla matchgroup=excla  start=/!!/  end=/$/
+syntax region quest matchgroup=quest  start=/??/  end=/$/
+syntax region comm1 matchgroup=comm1  start=/#/   end=/$/
+syntax region comm2 matchgroup=comm2  start=/##/  end=/$/
 
-" Highlight comment markers : !!, ??, #, and ##
-"syntax region excla matchgroup=excla     start=/!!/  end=/$/
-"highlight excla ctermfg=white ctermbg=red
-
-syntax region quest matchgroup=quest      start=/??/  end=/$/
+highlight excla ctermfg=white ctermbg=red
 highlight quest ctermfg=green
-
-syntax region comm1 matchgroup=comm1      start=/#/   end=/$/
 highlight comm1 ctermfg=130
-
-syntax region comm2 matchgroup=comm2       start=/##/  end=/$/
 highlight comm2 ctermfg=gray
-
-" Warning
-syntax region xWarning start=/!!*/ end=/$/ 
-highlight link xWarning ErrorMsg
-
-" // Comment
-syntax region xWhackComment start=/^\/\/ */ end=/$/
-"syntax region xBashComment start=/^\#/ end=/$/
-syntax region xQuoteComment start=/\"/ end=/$/
-
-highlight link xQuoteComment Comment
-"highlight link xBashComment Comment
-highlight link xWhackComment Comment
 
 
 " [[ Highlight IP addresses
@@ -94,8 +76,9 @@ highlight link xWhackComment Comment
 syntax match ipaddr /\(\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[1]\?\_[0-9]\?\_[0-9]\|\_[0]\)\.\)\{3\}\(25\_[0-5]\|2\_[0-4]\_[0-9]\|\_[1]\?\_[0-9]\?\_[0-9]\|\_[0]\)/
 
 highlight IPformat term=bold cterm=bold ctermfg=196 ctermbg=NONE gui=bold font=NONE guifg=#ff0000 guibg=NONE
+
 highlight link ipaddr IPformat 
-"]]
+"]]  
 
 
 " [[ Highlight MAC addresses
@@ -103,16 +86,19 @@ highlight link ipaddr IPformat
 syntax match macaddr /\(\(\_[0-9]\|\_[a-f]\|\_[A-F]\)\{2\}\(\:\)\)\{5\}\(\_[0-9]\|\_[a-f]\|\_[A-F]\)\{2\}/
 
 highlight MACformat term=bold cterm=bold ctermfg=DarkBlue ctermbg=NONE gui=bold font=NONE guifg=Green guibg=NONE
+
 highlight link macaddr MACformat
 "]]
 
 
 " [[ Highlight TimeStamp - format: YYYY-MM-DD-hh:mm:ss
+
 "/([0-9]){4}(-([0-9]){2}){3}(:([0-9]){2}){2}/
 
 syntax match timestamp /\(\_[0-9]\)\{4\}\(\-\(\_[0-9]\)\{2\}\)\{3\}\(\:\(\_[0-9]\)\{2\}\)\{2\}/
 
 highlight Timeformat term=bold cterm=bold ctermfg=34 ctermbg=NONE gui=bold font=NONE guifg=#008000 guibg=NONE
+
 highlight link timestamp Timeformat
 "]]
 
@@ -124,50 +110,52 @@ syntax match ip6addr /\<\(\(\(\_[A-Fa-f0-9]\{1,4\}\:\)\{1,7\}\|\:\)\:\)\>/
 syntax match ip6addr /\<\(\:\(\:\_[A-Fa-f0-9]\{1,4\}\)\{1,7\}\)\>/
 
 highlight IP6format term=bold cterm=bold ctermfg=220 ctermbg=NONE gui=bold font=NONE guifg=#ffd700 guibg=NONE
+
 highlight link ip6addr IP6format
-"]]
+ "]]
 
-" highlight PS outputs [[
 
+" highlight PS outputs - [[
 " [[>>  <<]] - between these brackets
-syntax region colRegion start=/\[\[>>/ end=/<<\]\]/  contains=csvField1,csvField2,csvField3,csvField4,csvField5,csvField6,csvField7,csvField8 keepend
+syntax region psRegion start=/\[\[>>/ end=/<<\]\]/ keepend 
 
-hi def link csvField1 LineNr    " yellow
-hi def link csvField2 Type      " green
-hi def link csvField3 WarningMsg" red 
-hi def link csvField4 Folded    " gray
-hi def link csvField5 Question  " light green
-hi def link csvField6 Constant  " orange
-hi def link csvField7 Comment   " blue
-hi def link csvField8 Folded    " gray
+hi def link psField1 LineNr     " Yellow
+hi def link psField2 Type       " Green
+hi def link psField3 WarningMsg " Red 
+hi def link psField4 Folded     " Gray
+hi def link psField5 Question   " Light Green
+hi def link psField6 Constant   " Orange
+hi def link psField7 Comment    " Blue
+hi def link psField8 Folded     " Gray
 
-syn match csvField8 /^\(\S\+\s*\)\{2\}/        contained containedin=csvField7 " grog dont caare
-syn match csvField7 /^\(\S\+\s*\)\{3\}/        contained containedin=csvField6 " UID
-syn match csvField6 /^\(\S\+\s*\)\{4\}/        contained containedin=csvField5 " PID
-syn match csvField5 /^\(\S\+\s*\)\{5\}/        contained containedin=csvField4 " PPID
-syn match csvField4 /^\(\S\+\s*\)\{12\}/       contained containedin=csvField3 " grog dont caare
-syn match csvField3 /^\(\S\+\s*\)\{13\}/       contained containedin=csvField2 " TTY
-syn match csvField2 /^\(\S\+\s*\)\{14\}/       contained containedin=csvField1 " time 
-syn match csvField1 /^\(\S\+\s*\)\{14\}\(.*\)/ contained containedin=colRegion " command running
+syn match psField8 /^\(\S\+\s*\)\{2\}/         contained containedin=psField7 " grog dont caare
+syn match psField7 /^\(\S\+\s*\)\{3\}/         contained containedin=psField6 " UID
+syn match psField6 /^\(\S\+\s*\)\{4\}/         contained containedin=psField5 " PID
+syn match psField5 /^\(\S\+\s*\)\{5\}/         contained containedin=psField4 " PPID
+syn match psField4 /^\(\S\+\s*\)\{12\}/        contained containedin=psField3 " grog dont caare
+syn match psField3 /^\(\S\+\s*\)\{13\}/        contained containedin=psField2 " TTY
+syn match psField2 /^\(\S\+\s*\)\{14\}/        contained containedin=psField1 " time 
+syn match psField1 /^\(\S\+\s*\)\{14\}\(.*$\)/ contained containedin=psRegion " command running
 
 "]]
+
 
 " highlight netstat outputs - [[
 " [[::  ::]] - between these brackets
 
-syntax region netRegion start=/\[\[::/ end=/::\]\]/ keepend contains=something
+syntax region netRegion start=/\[\[::/ end=/::\]\]/ keepend 
 
-hi def link netField1 Constant    " Orange
-hi def link netField2 Question    " Light Green
-hi def link netField3 Comment     " Blue
-hi def link netField4 Folded      " Blue
-hi def link netField5 Normal      " White
+hi def link netField1 Constant  " Orange
+hi def link netField2 Question  " Light Green
+hi def link netField3 Comment   " Blue
+hi def link netField4 Folded    " Blue
+hi def link netField5 Normal    " White
 
-syn match netField1 /^\(\S\+\s\+\)\{6\}\(.*$\)/ contained containedin=netRegion
-syn match netField2 /^\(\S\+\s\+\)\{6\}/        contained containedin=netField1
-syn match netField3 /^\(\S\+\s\+\)\{5\}/        contained containedin=netField2
-syn match netField4 /^\(\S\+\s\+\)\{4\}/        contained containedin=netField3
-syn match netField5 /^\(\S\+\s\+\)\{2\}/        contained containedin=netField4
+syn match netField1 /^\(\S\+\s\+\)\{6\}\(.*$\)/ contained containedin=netRegion " PID
+syn match netField2 /^\(\S\+\s\+\)\{6\}/        contained containedin=netField1 " Remote Addr
+syn match netField3 /^\(\S\+\s\+\)\{5\}/        contained containedin=netField2 " Local  Addr
+syn match netField4 /^\(\S\+\s\+\)\{4\}/        contained containedin=netField3 " Send  / Recv
+syn match netField5 /^\(\S\+\s\+\)\{2\}/        contained containedin=netField4 " Proto / State
 
 "]]
 
@@ -179,39 +167,21 @@ syn match netField5 /^\(\S\+\s\+\)\{2\}/        contained containedin=netField4
 :inoremap <F5> Epoch <C-R>=system('date -u "+%s"')<CR><C-R>=system('date -u "+%Z %Y-%m-%d-%H:%M:%S"')<CR>
 
 " F1 = Create Target Section Header
-:nnoremap <F1> i############################################################<CR>$ T# = [[ ip<CR><CR><ESC>
-:inoremap <F1> ############################################################<CR>$ T# = [[ ip<CR><CR>
+:nnoremap <F1> i###########################################################################<CR>$ T# = [[ ip<CR><CR><ESC>
+:inoremap <F1> ###########################################################################<CR>$ T# = [[ ip<CR><CR>
 
-" F2 = Create Timestamp Block 1
+" F2 = Create Timestamp Block --WITHOUT SURVEY SECTION 
 :nnoremap <F2> iLogin/Vet Start:<CR>Vetting End    :<CR>Disconnect     :<CR><CR><ESC>
 :inoremap <F2> Login/Vet Start:<CR>Vetting End    :<CR>Disconnect     :<CR><CR>
 
-" F3 = Create Timestamp Block 2 
+" F3 = Create Timestamp Block -- SURVEY SECTION 
 :nnoremap <F3> iLogin/Vet Start:<CR>Vetting End    :<CR>Survey Start   :<CR>Survey End     :<CR>Disconnect     :<CR><CR><ESC>
 :inoremap <F3> Login/Vet Start:<CR>Vetting End    :<CR>Survey Start   :<CR>Survey End     :<CR>Disconnect     :<CR><CR>
 
 " F4 = Create Target Section Footer
-:nnoremap <F4> i<CR>############################################################]]<CR><CR><ESC>
-:inoremap <F4> <CR>############################################################]]<CR><CR>
-
-" F7 = Insert SSH Forward
-:nnoremap <F7> i<CR>ssh -S $socket -O forward -
-:inoremap <F7> <CR>ssh -S $socket -O forward -
-
-" F8 = Insert SSH Command
-:nnoremap <F8> i<CR>ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null <ESC>
-:inoremap <F8> <CR>ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null 
-
+:nnoremap <F4> i<CR>###########################################################################]]<CR><CR><ESC>
+:inoremap <F4> <CR>###########################################################################]]<CR><CR>
 "]]
 
 
-"======================================
-" HOTKEYS:
-"
-" F5 - Timestamp (Epoch & UTC)
-" F1 - Target Header		F4 - Target Footer
-" F2 - Timestamp Block 	F3 - Timestamp Block w/ Survey
-" F7 - SSH Forward command	F8 - SSH Command
-"
-" Comments : !!, ??, #, ##, //, "
-"
+
