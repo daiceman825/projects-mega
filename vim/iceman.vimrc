@@ -127,6 +127,32 @@ highlight IP6format term=bold cterm=bold ctermfg=220 ctermbg=NONE gui=bold font=
 highlight link ip6addr IP6format
 "]]
 
+" highlight PS outputs [[
+
+" [[>>  <<]] - between these brackets
+syntax region colRegion start=/\[\[>>/ end=/<<\]\]/  contains=csvField1,csvField2,csvField3,csvField4,csvField5,csvField6,csvField7,csvField8 keepend
+
+hi def link csvField1 LineNr    " yellow
+hi def link csvField2 Type      " green
+hi def link csvField3 WarningMsg" red 
+hi def link csvField4 Folded    " gray
+hi def link csvField5 Question  " light green
+hi def link csvField6 Constant  " orange
+hi def link csvField7 Comment   " blue
+hi def link csvField8 Folded    " gray
+
+syn match csvField8 /^\(\S\+\s*\)\{2\}/        contained containedin=csvField7 " grog dont caare
+syn match csvField7 /^\(\S\+\s*\)\{3\}/        contained containedin=csvField6 " UID
+syn match csvField6 /^\(\S\+\s*\)\{4\}/        contained containedin=csvField5 " PID
+syn match csvField5 /^\(\S\+\s*\)\{5\}/        contained containedin=csvField4 " PPID
+syn match csvField4 /^\(\S\+\s*\)\{12\}/       contained containedin=csvField3 " grog dont caare
+syn match csvField3 /^\(\S\+\s*\)\{13\}/       contained containedin=csvField2 " TTY
+syn match csvField2 /^\(\S\+\s*\)\{14\}/       contained containedin=csvField1 " time 
+syn match csvField1 /^\(\S\+\s*\)\{14\}\(.*\)/ contained containedin=colRegion " command running
+
+"]]
+
+
 
 " [[ HOTKEYS 
 
