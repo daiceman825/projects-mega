@@ -152,6 +152,24 @@ syn match csvField1 /^\(\S\+\s*\)\{14\}\(.*\)/ contained containedin=colRegion "
 
 "]]
 
+" highlight netstat outputs - [[
+" [[::  ::]] - between these brackets
+
+syntax region netRegion start=/\[\[::/ end=/::\]\]/ keepend contains=something
+
+hi def link netField1 Constant    " Orange
+hi def link netField2 Question    " Light Green
+hi def link netField3 Comment     " Blue
+hi def link netField4 Folded      " Blue
+hi def link netField5 Normal      " White
+
+syn match netField1 /^\(\S\+\s\+\)\{6\}\(.*$\)/ contained containedin=netRegion
+syn match netField2 /^\(\S\+\s\+\)\{6\}/        contained containedin=netField1
+syn match netField3 /^\(\S\+\s\+\)\{5\}/        contained containedin=netField2
+syn match netField4 /^\(\S\+\s\+\)\{4\}/        contained containedin=netField3
+syn match netField5 /^\(\S\+\s\+\)\{2\}/        contained containedin=netField4
+
+"]]
 
 
 " [[ HOTKEYS 
