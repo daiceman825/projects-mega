@@ -181,6 +181,15 @@ syn match netField5 /^\(\S\+\s\+\)\{2\}/        contained containedin=netField4 
 " F4 = Create Section Footer
 :nnoremap <F4> i<CR>###########################################################################]]<CR><CR><ESC>
 :inoremap <F4> <CR>###########################################################################]]<CR><CR>
+
+" F7 = Insert SSH Forward
+:nnoremap <F7> i<CR>ssh -S $socket -O forward -
+:inoremap <F7> <CR>ssh -S $socket -O forward -
+
+" F8 = Insert SSH Command
+:nnoremap <F8> i<CR>ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null <ESC>
+:inoremap <F8> <CR>ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null 
+
 "]]
 
 
