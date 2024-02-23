@@ -166,7 +166,7 @@ syn match netField5 /^\(\S\+\s\+\)\{2\}/        contained containedin=netField4 
 :nnoremap <F5> aEpoch <C-R>=system('date -u "+%s"')<CR><C-R>=system('date -u "+%Z %Y-%m-%d-%H:%M:%S"')<CR><ESC>
 :inoremap <F5> Epoch <C-R>=system('date -u "+%s"')<CR><C-R>=system('date -u "+%Z %Y-%m-%d-%H:%M:%S"')<CR>
 
-" F1 = Create Target Section Header
+" F1 = Create Section Header
 :nnoremap <F1> i###########################################################################<CR>$ T# = [[ ip<CR><CR><ESC>
 :inoremap <F1> ###########################################################################<CR>$ T# = [[ ip<CR><CR>
 
@@ -178,10 +178,20 @@ syn match netField5 /^\(\S\+\s\+\)\{2\}/        contained containedin=netField4 
 :nnoremap <F3> iLogin/Vet Start:<CR>Vetting End    :<CR>Survey Start   :<CR>Survey End     :<CR>Disconnect     :<CR><CR><ESC>
 :inoremap <F3> Login/Vet Start:<CR>Vetting End    :<CR>Survey Start   :<CR>Survey End     :<CR>Disconnect     :<CR><CR>
 
-" F4 = Create Target Section Footer
+" F4 = Create Section Footer
 :nnoremap <F4> i<CR>###########################################################################]]<CR><CR><ESC>
 :inoremap <F4> <CR>###########################################################################]]<CR><CR>
 "]]
 
 
 
+"==============================================
+" HOTKEYS:
+"
+" F5 - Timestamp (Epoch & UTC)
+" F1 - Header                   F4 - Footer
+" F2 - Timestamp Block          F3 - Timestamp Block w/ Survey
+" F7 - SSH Forward command      F8 - SSH Command
+"
+" Comments : !!, ??, #, ##, //, "
+" Format Blocks : [[>> PS <<]] , [[:: SS ::]] 
